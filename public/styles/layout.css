@@ -25,18 +25,11 @@ body {
 
 .container {
   display: flex;
-  flex-direction: column;
   width: 90%;
-  margin: 0px;
-  background-color: rgb(149, 156, 156);
+  margin: auto;
   justify-content: center;
   align-items: center;
 }
-
-/* p {
-  width: 90%;
-  align-self: center;
-} */
 
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
