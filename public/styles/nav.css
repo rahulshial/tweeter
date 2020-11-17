@@ -1,0 +1,22 @@
+.nav-bar {
+  display: flex;
+  height: 120px;
+  background-color: #4056A1;
+  color: #FFFFFF;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.page-title {
+  display: flex;
+  font-family: 'Bungee', cursive;
+  font-weight: 300;
+  font-size: 35px;
+  margin: 1.5em;
+}
+
+.write-tweet-button {
+  display: flex;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 1.5em;
+}
