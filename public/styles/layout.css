@@ -27,10 +27,16 @@ body {
   display: flex;
   width: 90%;
   margin: auto;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 }
 
+.tweet-button {
+  background-color: #4056A1;
+  font-family: 'Bungee', cursive;
+  color: #FFFFFF;
+}
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
