@@ -2,8 +2,6 @@
   display: flex;
   flex-flow: column;
   margin-top: 10px;
-  /* justify-content: center; */
-  /* align-items: center; */
   width: 100%;
 }
 
@@ -33,4 +31,8 @@ textarea {
   font-family: 'Bungee', cursive;
   font-weight: bold;
   align-self: flex-end;
+}
+
+.red {
+  color: red;
 }

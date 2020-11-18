@@ -2,14 +2,14 @@
   display: flex;
   height: 400px;
   width: 100%;
-  flex-flow: column;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #ebbf3c;
-  background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
+  background-color:#7f8488;
+  background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
 .name {
-  align-self: center;
+  color: aliceblue;
 }
