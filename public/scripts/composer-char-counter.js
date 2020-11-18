@@ -1,6 +1,4 @@
 $(document).ready(function() {
-  console.log('In the script file - composer-char-counter.js');
-
   $("textarea").keydown(function(event) {
     const $inputLength = ($(this).val().length);
     let $remainingCharacters = 140 - $inputLength;

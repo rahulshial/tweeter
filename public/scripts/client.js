@@ -6,6 +6,19 @@
 
 $(document).ready(function() {
 
+  $(".tweet-button").click(event => {
+    event.preventDefault();
+    /** create the ajax post request */
+    $.ajax({
+      url: '/tweets',
+      dataType: 'text',
+      type: 'post',
+      contentType: 'application/x-www-form-urlencoded',
+      data: $("#tweet-text").serialize(),
+    })
+      .then($('#tweet-text').val(''));
+  });
+
   const createTweetElement = function(record) {
 
     const userName = record['user']['name'];
@@ -84,6 +97,7 @@ $(document).ready(function() {
 
   // Test / driver code (temporary)
   renderTweets();
+
 });
 
 
