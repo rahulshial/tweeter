@@ -3,12 +3,13 @@
   height: 120px;
   background-color: #4056A1;
   color: #FFFFFF;
-  /* flex-direction: column; */
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .page-title {
-  /* display: flex; */
   font-family: 'Bungee', cursive;
   font-weight: 300;
   font-size: 35px;
@@ -20,3 +21,5 @@
   font-family: 'Source Sans Pro', sans-serif;
   margin: 1.5em;
 }
+
+.sticky {}
