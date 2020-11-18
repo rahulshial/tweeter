@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   padding-top: 150px;
-  /* margin-top: auto; */
   background-color:#7f8488;
   background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
@@ -14,4 +13,8 @@
 
 .name {
   color: aliceblue;
+}
+
+.header img {
+  height: 200px;
 }
