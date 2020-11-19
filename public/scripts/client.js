@@ -8,15 +8,26 @@ $(document).ready(function() {
 
   $(".tweet-button").click(event => {
     event.preventDefault();
+    const tweet = $("#tweet-text").val();
+    if (!tweet.length > 0) {
+      alert("Tweet cannot be empty!");
+    } else if (tweet.length > 140) {
+      alert("Maximum 140 characters allowed!!");
+    } else {
+      $.ajax({
+        url: '/tweets',
+        dataType: 'text',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        data: $("#tweet-text").serialize(),
+      })
+        .then(() => {
+          $("#tweet-text").val('');
+          location.reload();
+        });
+    }
     /** create the ajax post request */
-    $.ajax({
-      url: '/tweets',
-      dataType: 'text',
-      type: 'post',
-      contentType: 'application/x-www-form-urlencoded',
-      data: $("#tweet-text").serialize(),
-    })
-      .then($('#tweet-text').val(''));
+
   });
 
   const createTweetElement = function(record) {
@@ -62,41 +73,27 @@ $(document).ready(function() {
 
   // Test / driver code (temporary). Eventually will get this from the server.
   
-  const renderTweets = function() {
-    for (const record of db) {
-      console.log(record);
+  const renderTweets = function(database) {
+    for (const record of database) {
       const $tweet = createTweetElement(record);
-      $(".tweet-container").append($tweet);
+      $(".tweet-container").prepend($tweet);
     }
   };
   
-  const db = [
-    {
-      "user": {
-        "name": "Newton",
-        "avatars": "https://i.imgur.com/73hZDYK.png",
-        "handle": "@SirIsaac"
-      },
-      "content": {
-        "text": "If I have seen further it is by standing on the shoulders of giants"
-      },
-      "created_at": 1605545728283
-    },
-    {
-      "user": {
-        "name": "Descartes",
-        "avatars": "https://i.imgur.com/nlhLi3I.png",
-        "handle": "@rd"
-      },
-      "content": {
-        "text": "Je pense , donc je suis"
-      },
-      "created_at": 1605632128283
-    }
-  ];
+  const loadTweets = function() {
+    //ajax get the
+    $.ajax("/tweets",{type: "GET"})
+      .then(data => {
+        renderTweets(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
+  loadTweets();
   // Test / driver code (temporary)
-  renderTweets();
+  // renderTweets();
 
 });
 
