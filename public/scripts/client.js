@@ -7,6 +7,11 @@
 $(document).ready(function() {
 
   const createTweetElement = function(record) {
+    const escape =  function(str) {
+      let div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    };
 
     const userName = record['user']['name'];
     const avatars = record['user']['avatars'];
@@ -29,7 +34,7 @@ $(document).ready(function() {
         </header>
         <!-- have a body, which contains the tweet text -->
         <div class="tweet-list-body">
-          <p>${tweetBody}</p>
+          <p>${escape(tweetBody)}</p>
         </div>
         <!-- have a footer which displays: how long ago tweet was created on the left, and "Flag", "Re-tweet" and "Like" icons upon hovering over the tweet, on the right -->
         <footer class="tweet-list-footer">
@@ -47,8 +52,6 @@ $(document).ready(function() {
     return tweetMarkUp;
   };
 
-  // Test / driver code (temporary). Eventually will get this from the server.
-  
   const renderTweets = function(database) {
     for (const record of database) {
       const $tweet = createTweetElement(record);
@@ -67,12 +70,15 @@ $(document).ready(function() {
   };
 
   $(".tweet-button").click(event => {
+    $(".error-line").hide();
     event.preventDefault();
     const tweet = $("#tweet-text").val();
     if (!tweet.length > 0) {
-      alert("Tweet cannot be empty!");
+      $(".error-line p").text("Tweet cannot be empty!");
+      $(".error-line").slideDown();
     } else if (tweet.length > 140) {
-      alert("Maximum 140 characters allowed!!");
+      $(".error-line p").text("Maximum 140 characters allowed!!");
+      $(".error-line").slideDown();
     } else {
       $.ajax({
         url: '/tweets',
@@ -94,7 +100,6 @@ $(document).ready(function() {
         });
     }
   });
-
   loadTweets();
 });
 
