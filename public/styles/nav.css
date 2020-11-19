@@ -20,17 +20,19 @@
 .write-tweet {
   display: flex;
   flex-direction: column;
-
 }
+
 .write-tweet-title {
-  /* display: flex; */
   font-family: 'Source Sans Pro', sans-serif;
   margin: 1.5em;
+  margin-bottom: 5px;
+  margin-top: 15px
 }
 
 .pencil-button {
   color: white;
   background-color: transparent;
+  font-size: 15px;
   border: 0;
   outline: none;
   animation: blinker 1s linear infinite;
