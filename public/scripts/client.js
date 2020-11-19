@@ -6,20 +6,55 @@
 
 $(document).ready(function() {
 
-  const createTweetElement = function(record) {
-    const escape =  function(str) {
-      let div = document.createElement('div');
-      div.appendChild(document.createTextNode(str));
-      return div.innerHTML;
-    };
+  /** Helper Functions */
 
+  const escape =  function(str) {
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+
+  const postTweetAndRender = function(tweet) {
+    $.ajax({
+      url: '/tweets',
+      dataType: 'text',
+      type: 'post',
+      contentType: 'application/x-www-form-urlencoded',
+      data: $(tweet).serialize(),
+    })
+      .then(() => {
+        $("#tweet-text").val('');
+        /** render the last entered tweet */
+        $.ajax("/tweets",{type: "GET"})
+          .then(data => {
+            renderTweets([data[data.length - 1]]);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+  };
+
+  const validateTweet = function(tweet) {
+    if (!tweet.length > 0) {
+      $(".error-message").text("Tweet cannot be empty!");
+      $(".error-line").slideDown();
+      return false;
+    } else if (tweet.length > 140) {
+      $(".error-message").text("Maximum 140 characters allowed!!");
+      $(".error-line").slideDown();
+      return false;
+    }
+    return true;
+  };
+
+  const createTweetElement = function(record) {
     const userName = record['user']['name'];
     const avatars = record['user']['avatars'];
     const userHandle = record['user']['handle'];
     const tweetBody = record['content']['text'];
     let createdAt = Math.round((Date.now() - record['created_at']) / 86400000);
     (createdAt > 1 ? createdAt += ' days ' : createdAt += ' day ');
-
     const tweetMarkUp = `
       <div class="tweet-list">
         <!-- have a header, which contains the user's: avatar, then name, and handle on extreme right -->
@@ -73,38 +108,15 @@ $(document).ready(function() {
     $(".tweet-form").toggle();
   });
 
-
   $(".tweet-button").click(event => {
     $(".error-line").slideUp();
     event.preventDefault();
     const tweet = $("#tweet-text").val();
-    if (!tweet.length > 0) {
-      $(".error-line p").text("Tweet cannot be empty!");
-      $(".error-line").slideDown();
-    } else if (tweet.length > 140) {
-      $(".error-line p").text("Maximum 140 characters allowed!!");
-      $(".error-line").slideDown();
-    } else {
-      $.ajax({
-        url: '/tweets',
-        dataType: 'text',
-        type: 'post',
-        contentType: 'application/x-www-form-urlencoded',
-        data: $("#tweet-text").serialize(),
-      })
-        .then(() => {
-          $("#tweet-text").val('');
-          /** display the last entered tweet */
-          $.ajax("/tweets",{type: "GET"})
-            .then(data => {
-              renderTweets([data[data.length - 1]]);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        });
+    if (validateTweet(tweet)) {
+      postTweetAndRender("#tweet-text");
     }
   });
+
   loadTweets();
 });
 

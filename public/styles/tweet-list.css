@@ -1,5 +1,4 @@
 /* Section */
-
 .tweet-list {
   box-sizing: border-box;
   border-style: solid;
@@ -12,7 +11,6 @@
 }
 
 /* Header */
-
 .tweet-list-header {
   display: flex;
   margin: auto;
@@ -46,17 +44,13 @@
   opacity: 0.5;
 }
 
-
-*/
 /* Body */
-
 p {
   display: flex;
   margin-left: auto;
 }
 
 /* Footer */
-
 .tweet-list-footer {
   display: flex;
   margin: auto;
