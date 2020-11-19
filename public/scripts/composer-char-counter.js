@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $("textarea").keydown(function(event) {
-    $(".error-line").hide();
+    $(".error-line").slideUp();
     const $inputLength = ($(this).val().length);
     let $remainingCharacters = 140 - $inputLength;
     // const $counter = $(this).parent().children().children().children(".counter");

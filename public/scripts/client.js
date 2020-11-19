@@ -69,8 +69,13 @@ $(document).ready(function() {
       });
   };
 
+  $(".pencil-button").click(function() {
+    $(".tweet-form").toggle();
+  });
+
+
   $(".tweet-button").click(event => {
-    $(".error-line").hide();
+    $(".error-line").slideUp();
     event.preventDefault();
     const tweet = $("#tweet-text").val();
     if (!tweet.length > 0) {

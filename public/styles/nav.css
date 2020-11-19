@@ -4,6 +4,7 @@
   background-color: #4056A1;
   color: #FFFFFF;
   justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   width: 100%;
@@ -16,10 +17,28 @@
   margin: 1.5em;
 }
 
-.write-tweet-button {
+.write-tweet {
+  display: flex;
+  flex-direction: column;
+
+}
+.write-tweet-title {
   /* display: flex; */
   font-family: 'Source Sans Pro', sans-serif;
   margin: 1.5em;
 }
 
-.sticky {}
+.pencil-button {
+  color: white;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  animation: blinker 1s linear infinite;
+  padding: 0;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
