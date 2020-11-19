@@ -6,30 +6,6 @@
 
 $(document).ready(function() {
 
-  $(".tweet-button").click(event => {
-    event.preventDefault();
-    const tweet = $("#tweet-text").val();
-    if (!tweet.length > 0) {
-      alert("Tweet cannot be empty!");
-    } else if (tweet.length > 140) {
-      alert("Maximum 140 characters allowed!!");
-    } else {
-      $.ajax({
-        url: '/tweets',
-        dataType: 'text',
-        type: 'post',
-        contentType: 'application/x-www-form-urlencoded',
-        data: $("#tweet-text").serialize(),
-      })
-        .then(() => {
-          $("#tweet-text").val('');
-          loadTweets();
-        });
-    }
-    /** create the ajax post request */
-
-  });
-
   const createTweetElement = function(record) {
 
     const userName = record['user']['name'];
@@ -81,7 +57,6 @@ $(document).ready(function() {
   };
   
   const loadTweets = function() {
-    //ajax get the
     $.ajax("/tweets",{type: "GET"})
       .then(data => {
         renderTweets(data);
@@ -91,10 +66,36 @@ $(document).ready(function() {
       });
   };
 
-  loadTweets();
-  // Test / driver code (temporary)
-  // renderTweets();
+  $(".tweet-button").click(event => {
+    event.preventDefault();
+    const tweet = $("#tweet-text").val();
+    if (!tweet.length > 0) {
+      alert("Tweet cannot be empty!");
+    } else if (tweet.length > 140) {
+      alert("Maximum 140 characters allowed!!");
+    } else {
+      $.ajax({
+        url: '/tweets',
+        dataType: 'text',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        data: $("#tweet-text").serialize(),
+      })
+        .then(() => {
+          $("#tweet-text").val('');
+          /** display the last entered tweet */
+          $.ajax("/tweets",{type: "GET"})
+            .then(data => {
+              renderTweets([data[data.length - 1]]);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        });
+    }
+  });
 
+  loadTweets();
 });
 
 
