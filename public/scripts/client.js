@@ -23,7 +23,7 @@ $(document).ready(function() {
       })
         .then(() => {
           $("#tweet-text").val('');
-          location.reload();
+          loadTweets();
         });
     }
     /** create the ajax post request */
