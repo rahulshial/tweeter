@@ -122,6 +122,21 @@ $(document).ready(function() {
     }
   });
 
+  $(document).scroll(function() {
+    let y = $(this).scrollTop();
+    if (y > 200) {
+      $(".scroll").fadeIn();
+    } else {
+      $(".scroll").fadeOut();
+    }
+  });
+
+  $(".scroll").click(event => {
+    event.preventDefault();
+    $("html, body").animate({ scrollTop: 0 });
+    return false;
+  });
+  
   loadTweets();
 });
 

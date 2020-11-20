@@ -81,5 +81,6 @@
 @media only screen and (max-width: 768px) {
   .nav-bar {
     background-color: #7f8488;
+    background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
   }
 }
