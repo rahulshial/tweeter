@@ -8,12 +8,13 @@ $(document).ready(function() {
 
   /** Helper Functions */
 
+  /** Preventing XSS with Escaping */
   const escape =  function(str) {
     let div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
   };
-
+  /** function to post the tweet to the database and render the last tweet in the list panel */
   const postTweetAndRender = function(tweet) {
     $.ajax({
       url: '/tweets',
@@ -34,7 +35,9 @@ $(document).ready(function() {
           });
       });
   };
-
+  /** valudate tweet attributes and display error messages if any.
+  * return true or false back to the calling function for further processing
+  */
   const validateTweet = function(tweet) {
     if (!tweet.length > 0) {
       $(".error-message").text("Tweet cannot be empty!");
@@ -48,33 +51,28 @@ $(document).ready(function() {
     return true;
   };
 
+  /** create the HTML Markup to display / render the tweets from the database */
   const createTweetElement = function(record) {
-    const userName = record['user']['name'];
-    const avatars = record['user']['avatars'];
-    const userHandle = record['user']['handle'];
-    const tweetBody = record['content']['text'];
-    let createdAt = Math.round((Date.now() - record['created_at']) / 86400000);
-    (createdAt > 1 ? createdAt += ' days ' : createdAt += ' day ');
     const tweetMarkUp = `
       <div class="tweet-list">
         <!-- have a header, which contains the user's: avatar, then name, and handle on extreme right -->
         <header class="tweet-list-header">
           <div class="avatar-name-wrapper">
-            <img class="avatar" src="${avatars}"></img>
-            <label name="user-name" class="user-name">${userName}</label>
+            <img class="avatar" src="${record.user.avatars}"></img>
+            <label name="user-name" class="user-name">${record.user.name}</label>
           </div>
           <div>
-            <label class="user-handle">${userHandle}</label>
+            <label class="user-handle">${record.user.handle}</label>
           </div>
         </header>
         <!-- have a body, which contains the tweet text -->
         <div class="tweet-list-body">
-          <p>${escape(tweetBody)}</p>
+          <p>${escape(record.content.text)}</p>
         </div>
         <!-- have a footer which displays: how long ago tweet was created on the left, and "Flag", "Re-tweet" and "Like" icons upon hovering over the tweet, on the right -->
         <footer class="tweet-list-footer">
           <div class="created-on">
-            <p>${createdAt} ago</p>
+            <p>${moment(record.created_at).fromNow()}</p>
           </div>
           <div class="icons">
             <i class="fa fa-flag"></i>
@@ -87,6 +85,10 @@ $(document).ready(function() {
     return tweetMarkUp;
   };
 
+  /** function called from within loadTweets and postAndRender
+   * This function receives the database and for each record calls the createTweetElement to render
+   * the tweet in the list panel
+   */
   const renderTweets = function(database) {
     for (const record of database) {
       const $tweet = createTweetElement(record);
@@ -94,6 +96,7 @@ $(document).ready(function() {
     }
   };
   
+  /** perform a AJAX call to fetch the database and pass it along to renderTweets for rendering */
   const loadTweets = function() {
     $.ajax("/tweets",{type: "GET"})
       .then(data => {
@@ -104,10 +107,12 @@ $(document).ready(function() {
       });
   };
 
-  $(".pencil-button").click(function() {
+  /** toggle the new tweet form on / off with the compose button in the nav bar. */
+  $(".compose-button").click(function() {
     $(".tweet-form").toggle();
   });
 
+  /** receive the tweet from the form and process for errors or appending to the database */
   $(".tweet-button").click(event => {
     $(".error-line").slideUp();
     event.preventDefault();
