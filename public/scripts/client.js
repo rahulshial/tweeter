@@ -6,6 +6,17 @@
 
 $(document).ready(function() {
 
+  const botTweet = [{
+    "user": {
+      "name": "Tweet Bot",
+      "avatars": "https://i.imgur.com/73hZDYK.png",
+      "handle": "@TweetBot"
+    },
+    "content": {
+      "text": "Welcome to your Tweeter Account! What's on your mind!"
+    },
+    "created_at": Date.now()
+  }];
   /** Helper Functions */
 
   /** Preventing XSS with Escaping */
@@ -67,7 +78,7 @@ $(document).ready(function() {
         </header>
         <!-- have a body, which contains the tweet text -->
         <div class="tweet-list-body">
-          <p>${escape(record.content.text)}</p>
+          <p class="tweet-line">${escape(record.content.text)}</p>
         </div>
         <!-- have a footer which displays: how long ago tweet was created on the left, and "Flag", "Re-tweet" and "Like" icons upon hovering over the tweet, on the right -->
         <footer class="tweet-list-footer">
@@ -100,6 +111,9 @@ $(document).ready(function() {
   const loadTweets = function() {
     $.ajax("/tweets",{type: "GET"})
       .then(data => {
+        if (data.length === 0) {
+          renderTweets(botTweet);
+        }
         renderTweets(data);
       })
       .catch(error => {
