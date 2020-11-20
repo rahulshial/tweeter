@@ -8,6 +8,8 @@
   position: fixed;
   top: 0;
   width: 100%;
+  opacity: 1;
+  z-index: 9999;
 }
 
 .page-title {
@@ -42,5 +44,11 @@
 @keyframes blinker {
   50% {
     opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .nav-bar {
+    background-color: #7f8488;
   }
 }

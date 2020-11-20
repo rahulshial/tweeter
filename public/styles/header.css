@@ -1,16 +1,16 @@
 .header {
-  display: flex;
-  height: 500px;
+  height: 400px;
   width: 100%;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 150px;
-  background-color:#7f8488;
+  background-color: #7f8488;
   background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
-.name {
+.header h2 {
   color: aliceblue;
+  margin: 0;
 }
