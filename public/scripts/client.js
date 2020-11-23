@@ -36,6 +36,7 @@ $(document).ready(function() {
     })
       .then(() => {
         $("#tweet-text").val('');
+        $(".counter").text(140);
         /** render the last entered tweet */
         $.ajax("/tweets",{type: "GET"})
           .then(data => {
